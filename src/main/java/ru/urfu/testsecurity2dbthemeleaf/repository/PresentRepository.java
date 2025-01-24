@@ -5,6 +5,5 @@ import org.springframework.stereotype.Repository;
 import ru.urfu.testsecurity2dbthemeleaf.enity.Present;
 
 @Repository
-public interface RoleRepository extends JpaRepository<Present, Long> {
-    Present findByName(String name);
+public interface PresentRepository extends JpaRepository<Present, Long> {
 }

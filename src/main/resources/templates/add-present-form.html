@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Авторизация</title>
+  <title>Add Present</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body {
@@ -15,7 +15,11 @@
       border-radius: 12px;
       box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
       padding: 20px;
-      margin-top: 100px;
+      margin-top: 40px;
+    }
+    h3 {
+      font-weight: bold;
+      color: #343a40;
     }
     .navbar-brand {
       font-weight: bold;
@@ -28,69 +32,55 @@
     .form-control {
       border-radius: 8px;
     }
-    .alert {
-      border-radius: 8px;
-    }
-    .btn {
-      border-radius: 8px;
-    }
-    .login-footer {
-      text-align: center;
-      font-size: 0.9rem;
-    }
-    .login-footer a {
-      font-weight: bold;
+    button {
+      margin-top: 15px;
     }
   </style>
 </head>
 <body>
-
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
-    <a class="navbar-brand" th:href="@{/index}"></a>
+    <a class="navbar-brand" th:href="@{/index}">Дом</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
-          <a class="nav-link" th:href="@{/register}">Регистрация</a>
+          <a class="nav-link" th:href="@{/about}">О нас</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/list}">Сотрудники</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/list-presents}">Подарки</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/users}">Пользователи</a>
         </li>
       </ul>
     </div>
   </div>
 </nav>
 
+<!-- Main Content -->
 <div class="container">
   <div class="content-container">
-    <h2 class="text-center mb-4">Форма входа</h2>
-
-    <div th:if="${param.error}">
-      <div class="alert alert-danger">Неправильная почта или пароль</div>
-    </div>
-    <div th:if="${param.logout}">
-      <div class="alert alert-success">Вы вышли.</div>
-    </div>
-
-    <!-- Login Form -->
-    <form th:action="@{/login}" method="post">
+    <h3 class="mb-4">Добавить подарок</h3>
+    <form th:action="@{/savePresent}" th:object="${present}" method="POST">
       <div class="mb-3">
-        <label for="username" class="form-label">Почта</label>
-        <input type="text" id="username" name="username" class="form-control" placeholder="Введите почту" required>
+        <label for="name" class="form-label">Name</label>
+        <input type="text" id="name" th:field="*{name}" class="form-control" placeholder="Название подарка" required>
       </div>
       <div class="mb-3">
-        <label for="password" class="form-label">Пароль</label>
-        <input type="password" id="password" name="password" class="form-control" placeholder="Введите пароль" required>
+        <label for="price" class="form-label">Price (RUB)</label>
+        <input type="number" id="price" th:field="*{price}" class="form-control" placeholder="Цена" required>
       </div>
-      <div class="mb-3">
-        <button type="submit" class="btn btn-primary w-100">Login</button>
-      </div>
+      <input type="hidden" th:field="*{id}">
+      <button type="submit" class="btn btn-primary w-100">Save</button>
     </form>
-
-    <div class="login-footer">
-      <p>Не зарегистрированы? <a th:href="@{/register}">Зарегистрироваться</a></p>
-    </div>
+    <a th:href="@{/list-presents}" class="btn btn-secondary w-100 mt-3">Вернуться к списку подарков</a>
   </div>
 </div>
 
